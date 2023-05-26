@@ -20,17 +20,17 @@
 </head>
 
 <body>
-    <div id="app">
-
+    <div id="app" class="bg-dark">
         @include('partials.header')
-        <div class="mycontainer d-flex">
+        <div class="mycontainer d-flex container bg-white">
             <div class="sidebar">
                 @include('partials.sidebar')
             </div>
-            <div class="content">
+            <div class="content container">
                 @yield('content')
             </div>
         </div>
+    </div>
 </body>
 
 </html>

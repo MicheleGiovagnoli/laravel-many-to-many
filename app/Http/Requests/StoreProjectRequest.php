@@ -27,7 +27,8 @@ class StoreProjectRequest extends FormRequest
             'title' => 'required|max:150|unique:projects',
             'content' => 'nullable',
             'slug' => 'nullable',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'exists:technologies,id'
         ];
     }
 }

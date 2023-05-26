@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <table class="table">
+    <table class="table p-5">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -9,6 +9,7 @@
                 <th scope="col">Content</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Tipo</th>
+                <th scope="col">Tecnologia</th>
                 <th scope="col">Info</th>
                 <th scope="col">Modifica</th>
                 <th scope="col">Elimina</th>
@@ -22,6 +23,11 @@
                     <td>{{ $project->content }}</td>
                     <td>{{ $project->slug }}</td>
                     <td>{{ $project->type ? $project->type->name : 'Nessun tipo' }}</td>
+                    <td>
+                        @foreach ($project->technologies as $technology)
+                            {{ $technology->name }}
+                        @endforeach
+                    </td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('admin.projects.show', $project->slug) }}">Info</a>
                     </td>
@@ -40,4 +46,24 @@
             @endforeach
         </tbody>
     </table>
+    {{-- MODALE --}}
+    <div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Warning!
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="confirmDelete btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

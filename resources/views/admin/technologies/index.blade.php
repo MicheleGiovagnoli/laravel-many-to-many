@@ -6,17 +6,15 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Slug</th>
-                <th scope="col">Numero di post</th>
+                <th scope="col">slug</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($types as $type)
+            @foreach ($technologies as $technology)
                 <tr>
-                    <td>{{ $type->id }}</td>
-                    <td>{{ $type->name }}</td>
-                    <td>{{ $type->slug }}</td>
-                    <td>{{ count($type->project) }}</td>
+                    <td>{{ $technology->id }}</td>
+                    <td>{{ $technology->name }}</td>
+                    <td>{{ $technology->slug }}</td>
                 </tr>
             @endforeach
         </tbody>

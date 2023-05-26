@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -49,8 +51,13 @@ class ProjectController extends Controller
         if ($checkProject) {
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo Project, cambia il titolo']);
         }
-        $newPost = Project::create($validated_data);
-        return redirect()->route('admin.projects.index', ['project' => $newPost->slug])->with('status', 'Post creato con successo!');
+        $newProject = Project::create($validated_data);
+
+        //creo collegamento tra il project e gli id del techonlogies
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
+        return redirect()->route('admin.projects.index', ['project' => $newProject->slug])->with('status', 'Post creato con successo!');
     }
 
     /**
@@ -72,8 +79,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $projects = Project::all();
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -93,6 +102,9 @@ class ProjectController extends Controller
         if ($checkProject) {
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo Project, cambia il titolo']);
         }
+
+        //prendo i dati che entrano nella request 
+        $project->technologies()->sync($request->technologies);
 
         $project->update($validated_data);
         return redirect()->route('admin.projects.index', ['project' => $project->slug])->with('status', 'Post modificato con successo!');
