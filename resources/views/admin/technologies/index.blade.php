@@ -19,4 +19,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="container">
+        <a href="{{ route('admin.technologies.create') }}" class="btn btn-primary">Crea Nuova Tecnologia</a>
+    </div>
 @endsection
