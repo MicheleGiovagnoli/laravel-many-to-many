@@ -25,7 +25,8 @@
                     <td>{{ $project->type ? $project->type->name : 'Nessun tipo' }}</td>
                     <td>
                         @foreach ($project->technologies as $technology)
-                            {{ $technology->name }}
+                            <span class="badge text-bg-warning rounded-pill">
+                                {{ $technology->name }}</span>
                         @endforeach
                     </td>
                     <td>
